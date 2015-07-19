@@ -19,3 +19,4 @@ end
 
 gem 'devise'
 gem 'bootstrap-sass'
+gem 'acts_as_votable'
