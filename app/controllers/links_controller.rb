@@ -1,6 +1,7 @@
 class LinksController < ApplicationController
   before_action :set_link, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, :except => [:index, :show]
+  before_action :authorized_user, only: [:edit, :update, :destroy]
   # GET /links
   # GET /links.json
   def index
@@ -71,4 +72,10 @@ class LinksController < ApplicationController
     def link_params
       params.require(:link).permit(:title, :url)
     end
+
+    def authorized_user
+  @link = current_user.links.find_by(id: params[:id])
+  redirect_to links_path, notice: "Not authorized to edit this link" if @link.nil?
+end
+
 end
